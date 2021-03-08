@@ -48,6 +48,7 @@ var elFilterCategory = document.getElementById('filterCategory')
 var elFilterPrice = document.getElementById('filterHighPrice')
 // load data product 
 window.addEventListener('load', getProducts(products), false);
+window.addEventListener('load', getCarts(carts), false);
 // add product when form submit 
 elForm.addEventListener('submit', addProduct, false);
 // clear filter form 
@@ -63,8 +64,8 @@ function showTransaction(){
   let subTotal = 0
   let result = '<ul>'
   carts.forEach((val) => {
-    subTotal += parseInt(val.price)
-    result += `<li>${val.id} | ${val.category} | ${val.name} | ${val.price}</li>`
+    subTotal += parseInt(val.price) * parseInt(val.qty)
+    result += `<li>${val.category} | ${val.name} | Rp ${val.price} X ${val.qty} = Rp ${parseInt(val.price) * parseInt(val.qty)}</li>`
   })
   let ppn = 0.1 * subTotal
   let total = subTotal + parseInt(ppn)
@@ -83,12 +84,32 @@ function deleteCart(e){
 // add cart 
 function addCart(e){
   let product = e.target.parentElement.parentElement
-  carts.push({
-    id: product.childNodes[1].textContent,
-    category: product.childNodes[3].textContent,
-    name: product.childNodes[5].textContent,
-    price: product.childNodes[7].textContent,
+  let idProduct = product.childNodes[1].textContent
+  let isThere = false;
+  let index
+  carts.forEach((val, ind) => {
+    if(parseInt(val.id) === parseInt(idProduct)){
+      isThere = true
+      index = ind
+    }
   })
+  if(isThere){
+    carts[index] = {
+      id: idProduct,
+      category: product.childNodes[3].textContenty,
+      name: product.childNodes[5].textContent,
+      price: product.childNodes[7].textContent,
+      qty: carts[index].qty + 1,
+    }
+  }else{
+    carts.push({
+      id: idProduct,
+      category: product.childNodes[3].textContenty,
+      name: product.childNodes[5].textContent,
+      price: product.childNodes[7].textContent,
+      qty: 1,
+    })
+  }
   getCarts(carts)
 }
 // get cart 
@@ -100,7 +121,8 @@ function getCarts(carts){
       <td>${el.category}</td>
       <td>${el.name}</td>
       <td>${el.price}</td>
-      <td><input type="hidden" value="${index}" id="indexCart"><input type="button" value="Delete" onclick=deleteCart(event)></td>
+      <td>${el.qty}</td>
+      <td><input type="button" value="Delete" onclick=deleteCart(event)></td>
     </tr>`
   })
   document.querySelector('.cart-data table tbody').innerHTML = result
@@ -192,7 +214,7 @@ function getProducts(products){
       <td>${el.name}</td>
       <td>${el.price}</td>
       <td>${el.stock}</td>
-      <td><input type="button" value="Buy" onclick=addCart(event)></td>
+      <td><input type="button" value="Add" onclick=addCart(event)></td>
       <td><input type="button" value="Delete" onclick=deleteProduct(${el.id})></td>
       <td><input type="button" value="Edit" onclick="editProduct(event)"></td>
     </tr>`
