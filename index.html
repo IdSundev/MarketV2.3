@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Market V.2.0</title>
+  <link rel="stylesheet" href="./style.css">
+</head>
+<body>
+  <div id="market" class="filter">
+    <h3>Filter</h3>
+    <div>
+      Nama: <input type="text" id="filterName" placeholder="Nama"> <br>
+      Harga: <input type="number" id="filterLowPrice" placeholder="0"> - <input type="number" id="filterHighPrice" placeholder="000.000"> <br>
+      Category: <select id="filterCategory">
+        <option value="All">All</option>
+        <option value="Fast Food">Fast Food</option>
+        <option value="Electronic">Electronic</option>
+        <option value="Cloth">Cloth</option>
+        <option value="Fruit">Fruit</option>
+      </select> <br>
+      <button id="resetFilter">Reset</button>
+    </div>
+  </div>
+  <div id="market" class="input-data">
+    <h3>Input Data</h3>
+    <form id="formAddProduct">
+      <table>
+        <tr>
+          <td><input type="text" id="name" placeholder="Nama"></td>
+          <td><input type="number" id="price" placeholder="Harga"></td>
+          <td>
+            <select id="category">
+              <option value="All">All</option>
+              <option value="Fast Food">Fast Food</option>
+              <option value="Electronic">Electronic</option>
+              <option value="Cloth">Cloth</option>
+              <option value="Fruit">Fruit</option>
+            </select>
+          </td>
+          <td><input type="number" id="stock" placeholder="Stock"></td>
+        </tr>
+      </table>
+      <button type="submit">Submit</button>
+    </form>
+  </div>
+  <div id="market" class="product-data">
+    <h3>Tabel Data</h3>
+    <table>
+      <thead>
+        <th>Id</th>
+        <th>Category</th>
+        <th>Nama</th>
+        <th>Price</th>
+        <th>Stock</th>
+        <th>Buy</th>
+        <th colspan="2">Action</th>
+      </thead>
+      <tbody></tbody>
+    </table>
+  </div>
+  <div id="market" class="cart-data">
+    <h3>Cart</h3>
+    <table>
+      <thead>
+        <th>Id</th>
+        <th>Category</th>
+        <th>Name</th>
+        <th>Price</th>
+        <th>Action</th>
+      </thead>
+      <tbody></tbody>
+    </table>
+    <button id="showPayment" onclick=showTransaction()>Payment</button>
+  </div>
+  <div id="market" class="payment">
+    <h3>Payment</h3>
+    <h2>Transaction Detail</h2>
+    <div id="transaction-detail">
+    </div>
+  </div>
+  <script src="./app.js"></script>
+</body>
+</html>
